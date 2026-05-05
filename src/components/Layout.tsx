@@ -1,13 +1,25 @@
-/* Layout Component - A component that wraps the main content of the app
-   - Use this file to add a header, footer, or other elements that should be present on every page
-   - This component is used in the App.tsx file to wrap the main content of the app */
-
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
+import { WhatsAppButton } from '@/components/WhatsAppButton'
 
 export default function Layout() {
+  const { pathname } = useLocation()
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
   return (
-    <main className="flex flex-col min-h-screen">
-      <Outlet />
-    </main>
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-1 pt-20 flex flex-col">
+        <Outlet />
+      </main>
+      <Footer />
+      <WhatsAppButton />
+    </div>
   )
 }
